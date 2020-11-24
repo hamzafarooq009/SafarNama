@@ -11,6 +11,8 @@ public class StoryManagerScript : MonoBehaviour
     public bool dialogue_ongoing;
     public Dictionary<int, bool> storyData;
     public Dictionary<int, string> exhibitList;
+    
+    public int coins;
 
     // private void Awake()
     // {
