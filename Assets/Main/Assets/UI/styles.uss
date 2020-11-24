@@ -1,0 +1,7 @@
+#appName {
+    color: rgb(240, 200, 0);
+}
+
+#image {
+    align-items: center;
+}
