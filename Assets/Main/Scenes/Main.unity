@@ -337,12 +337,12 @@ PrefabInstance:
     - target: {fileID: 114749822420515666, guid: 40be5343836efc449af67e54876afb62,
         type: 3}
       propertyPath: ImageFileSource.Name
-      value: A
+      value: C
       objectReference: {fileID: 0}
     - target: {fileID: 114749822420515666, guid: 40be5343836efc449af67e54876afb62,
         type: 3}
       propertyPath: ImageFileSource.Path
-      value: A.png
+      value: C.png
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40be5343836efc449af67e54876afb62, type: 3}
@@ -585,7 +585,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Makhnu1
+          m_StringArgument: BahadurShahZafar
           m_BoolArgument: 0
         m_CallState: 2
   onCount:
@@ -679,7 +679,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1113,12 +1113,12 @@ PrefabInstance:
     - target: {fileID: 114749822420515666, guid: 40be5343836efc449af67e54876afb62,
         type: 3}
       propertyPath: ImageFileSource.Name
-      value: A
+      value: B
       objectReference: {fileID: 0}
     - target: {fileID: 114749822420515666, guid: 40be5343836efc449af67e54876afb62,
         type: 3}
       propertyPath: ImageFileSource.Path
-      value: A.png
+      value: B.png
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40be5343836efc449af67e54876afb62, type: 3}
@@ -3139,7 +3139,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Makhnu1
+          m_StringArgument: QueenVictoria
           m_BoolArgument: 0
         m_CallState: 2
   onCount:
@@ -3233,7 +3233,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 2c57751e748651a4c9bd8f9f48e8cf5e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
