@@ -12,8 +12,8 @@ public class StoryManagerScript : MonoBehaviour
     public bool dialogue_ongoing;
     public Dictionary<int, bool> storyData;
     public Dictionary<int, string> exhibitList;
-    
-    public int coins;
+
+    public int coins; //Current coins collected in the stage
 
     // private void Awake()
     // {
@@ -25,6 +25,8 @@ public class StoryManagerScript : MonoBehaviour
 
     private void Start()
     {
+        coins = 0;
+        Debug.Log("Coins = " + coins);
         dialogue_ongoing = false;
         storyData = new Dictionary<int, bool>();
         exhibitList = new Dictionary<int, string>();
@@ -42,11 +44,14 @@ public class StoryManagerScript : MonoBehaviour
 
     private void Show_Image(int index)
     {
-        for (int i = 0; i < Images.Length; i++){
-            if (i == index) {
+        for (int i = 0; i < Images.Length; i++)
+        {
+            if (i == index)
+            {
                 Images[i].SetActive(true);
             }
-            else {
+            else
+            {
                 Images[i].SetActive(false);
             }
         }
@@ -54,7 +59,8 @@ public class StoryManagerScript : MonoBehaviour
 
     private void Hide_All_Images()
     {
-        for (int i = 0; i < Images.Length; i++){
+        for (int i = 0; i < Images.Length; i++)
+        {
             Images[i].SetActive(false);
         }
     }
@@ -86,6 +92,16 @@ public class StoryManagerScript : MonoBehaviour
         if (dialogue_ongoing)
             return;
 
+        // If exhibit has been finished before, tell user to move to next exhibit
+        Debug.Log("Storyindex = " + storyData[index] + "index = " + index);
+        if (storyData[index] && index != 3) //To not check on last exhibit
+        {
+            var returnText = new List<DialogData>();
+            returnText.Add(new DialogData("Hi again! you need to look for " + exhibitList[index + 1] + " now", ch));
+            DialogManager.Show(returnText);
+            return;
+        }
+
         dialogue_ongoing = true;
 
 
@@ -112,7 +128,9 @@ public class StoryManagerScript : MonoBehaviour
 
             if (DialogManager.Result == "Correct")
             {
-                Unlock_Exhibit(index+1);                
+                coins += 50;
+                Debug.Log("coins = " + coins);
+                Unlock_Exhibit(index + 1);
                 storyData[index] = true;
                 var answerDiag = new List<DialogData>();
                 answerDiag.Add(new DialogData(correct_response, exhibit_ch));
