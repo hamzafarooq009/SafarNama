@@ -6,7 +6,8 @@ public class StoryManagerScript : MonoBehaviour
 {
     // #TODO: PlayerPrefs
     public DialogManager DialogManager;
-    public GameObject[] Image;
+    public GameObject[] Images;
+    public GameObject[] Trackers;
     private string exhibit_ch = "Exhibit";
     public bool dialogue_ongoing;
     public Dictionary<int, bool> storyData;
@@ -41,7 +42,27 @@ public class StoryManagerScript : MonoBehaviour
 
     private void Show_Image(int index)
     {
-        Image[index].SetActive(true);
+        for (int i = 0; i < Images.Length; i++){
+            if (i == index) {
+                Images[i].SetActive(true);
+            }
+            else {
+                Images[i].SetActive(false);
+            }
+        }
+    }
+
+    private void Hide_All_Images()
+    {
+        for (int i = 0; i < Images.Length; i++){
+            Images[i].SetActive(false);
+        }
+    }
+
+    private void Unlock_Exhibit(int index)
+    {
+        Trackers[index].transform.GetChild(0).gameObject.SetActive(false); // lock set false, LOCK MUST BE FIRST CHILD
+        Trackers[index].transform.GetChild(1).gameObject.SetActive(true); // model set active
     }
 
     private void generateDialog(int index, List<DialogData> dialogTexts, int top, RectTransform rt, string ch, string question, string[] answers, int correct_choice_index, string correct_response, string wrong_response)
@@ -91,6 +112,7 @@ public class StoryManagerScript : MonoBehaviour
 
             if (DialogManager.Result == "Correct")
             {
+                Unlock_Exhibit(index+1);                
                 storyData[index] = true;
                 var answerDiag = new List<DialogData>();
                 answerDiag.Add(new DialogData(correct_response, exhibit_ch));
@@ -131,8 +153,8 @@ public class StoryManagerScript : MonoBehaviour
         dialogTexts.Add(new DialogData("Text can be /speed:down/slow... /speed:init//speed:up/or fast.", ch, () => Show_Image(4)));
         dialogTexts.Add(new DialogData("You don't even need to click on the window like this.../speed:0.1/ tada!/close/", ch, () =>
         {
-            // TODO: Add timeout for last dialog
             rt.offsetMax = new Vector2(rt.offsetMax.x, top);
+            Hide_All_Images();
         }));
 
         generateDialog(0, dialogTexts, top, rt, ch, question, answers, correct_choice_index, correct_response, wrong_response);
@@ -155,6 +177,7 @@ public class StoryManagerScript : MonoBehaviour
         dialogTexts.Add(new DialogData("You don't even need to click on the window like this.../speed:0.1/ tada!/close/", ch, () =>
         {
             rt.offsetMax = new Vector2(rt.offsetMax.x, top);
+            Hide_All_Images();
         }));
 
         generateDialog(1, dialogTexts, top, rt, ch, question, answers, correct_choice_index, correct_response, wrong_response);
@@ -178,6 +201,7 @@ public class StoryManagerScript : MonoBehaviour
         dialogTexts.Add(new DialogData("You don't even need to click on the window like this.../speed:0.1/ tada!/close/", ch, () =>
         {
             rt.offsetMax = new Vector2(rt.offsetMax.x, top);
+            Hide_All_Images();
         }));
 
         generateDialog(2, dialogTexts, top, rt, ch, question, answers, correct_choice_index, correct_response, wrong_response);
