@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using Doublsb.Dialog;
+using UnityEngine.UI;
 
 public class StoryManagerScript : MonoBehaviour
 {
@@ -14,19 +15,13 @@ public class StoryManagerScript : MonoBehaviour
     public Dictionary<int, string> exhibitList;
 
     public int coins; //Current coins collected in the stage
-
-    // private void Awake()
-    // {
-    //     // switch()
-    //     // Debug.Log(dialogue_ongoing);
-    // }
-
-    //PlayerPrefs coins
+    public Text coinsText;
 
     private void Start()
     {
+
         coins = 0;
-        Debug.Log("Coins = " + coins);
+        coinsText.text = "Coins: " + coins.ToString();
         dialogue_ongoing = false;
         storyData = new Dictionary<int, bool>();
         exhibitList = new Dictionary<int, string>();
@@ -38,7 +33,7 @@ public class StoryManagerScript : MonoBehaviour
 
         exhibitList.Add(0, "Makhnu");
         exhibitList.Add(1, "Queen Victoria");
-        exhibitList.Add(2, "<ENTER NAME HERE>");
+        exhibitList.Add(2, "Bahadur Shah Zafar");
         exhibitList.Add(3, "<ENTER NAME HERE>");
     }
 
@@ -75,35 +70,60 @@ public class StoryManagerScript : MonoBehaviour
     {
         if (index != 0)
             Debug.Log("In Generate Dialog: " + storyData[index - 1]);
-        if (index != 0 && !storyData[index - 1])
-        {
-            //Will not let the user proceed until previous exhibit is finished.
+        // if (index != 0 && !storyData[index - 1]) //TODO: Do not understand Unlock_Exhibit
+        // {
+        //     //Will not let the user proceed until previous exhibit is finished.
 
-            // Get name of previous exhibit from the list of exhibits
-            // string exhibit_name = exhibit_list[index-1];
+        //     // Get name of previous exhibit from the list of exhibits
+        //     // string exhibit_name = exhibit_list[index-1];
 
-            // Makhnu quote: "Visit the {model} exhibit before you can visit this one"
-            // string quote = "Visit the" +  {model} exhibit before you can visit this one"
+        //     // Makhnu quote: "Visit the {model} exhibit before you can visit this one"
+        //     // string quote = "Visit the" +  {model} exhibit before you can visit this one"
 
 
-            return;
-        }
+        //     return;
+        // }
 
         if (dialogue_ongoing)
             return;
 
+        dialogue_ongoing = true;
+
         // If exhibit has been finished before, tell user to move to next exhibit
-        Debug.Log("Storyindex = " + storyData[index] + "index = " + index);
         if (storyData[index] && index != 3) //To not check on last exhibit
         {
             var returnText = new List<DialogData>();
-            returnText.Add(new DialogData("Hi again! you need to look for " + exhibitList[index + 1] + " now", ch));
+            returnText.Add(new DialogData("Hi again! you need to look for " + exhibitList[index + 1] + " now", ch, () =>
+            {
+                dialogue_ongoing = false;
+            }));
             DialogManager.Show(returnText);
             return;
         }
 
-        dialogue_ongoing = true;
+        // If exhibit has been finished before, tell user to move to next exhibit
+        if (storyData[index] && index != 3) //To not check on last exhibit
+        {
+            var returnText = new List<DialogData>();
+            returnText.Add(new DialogData("Hi again! you need to look for " + exhibitList[index + 1] + " now", ch, () =>
+            {
+                dialogue_ongoing = false;
+            }));
+            DialogManager.Show(returnText);
+            return;
+        }
 
+        // If user has failed current exhibit, then storyData[index-1] will be false. Use this to send user back to previous exhibit
+        if (index != 0 && !storyData[index - 1])
+        {
+            var returnText = new List<DialogData>();
+            returnText.Add(new DialogData("You have to meet " + exhibitList[index - 1] + " again before I will speak with you.", ch, () =>
+            {
+                dialogue_ongoing = false;
+            }));
+            DialogManager.Show(returnText);
+            return;
+        }
 
         // var QuestionOnly = new DialogData(question, exhibit_ch);
         // dialogTexts.Add(QuestionOnly);
@@ -129,8 +149,14 @@ public class StoryManagerScript : MonoBehaviour
             if (DialogManager.Result == "Correct")
             {
                 coins += 50;
-                Debug.Log("coins = " + coins);
-                Unlock_Exhibit(index + 1);
+                coinsText.text = "Coins: " + coins.ToString();
+
+                // Only unlock exhibit if not last exhibit
+                if (index != 2) // FIXME: change length
+                {
+                    Unlock_Exhibit(index + 1);
+                }
+
                 storyData[index] = true;
                 var answerDiag = new List<DialogData>();
                 answerDiag.Add(new DialogData(correct_response, exhibit_ch));
@@ -138,6 +164,11 @@ public class StoryManagerScript : MonoBehaviour
             }
             else if (DialogManager.Result == "Wrong")
             {
+                // Send to last exhibit but only if user not at first exhibit
+                if (index != 0)
+                {
+                    storyData[index - 1] = false;
+                }
                 var answerDiag = new List<DialogData>();
                 answerDiag.Add(new DialogData(wrong_response, exhibit_ch));
                 DialogManager.Show(answerDiag);
@@ -153,6 +184,7 @@ public class StoryManagerScript : MonoBehaviour
 
     public void Makhnu1()
     {
+        int id = 0;
         string ch = "Makhnu";
         string question = "What is 2 times 5?";
         string[] answers = { "10", "7", "5 * 2", "Why should I care?" };
@@ -175,18 +207,19 @@ public class StoryManagerScript : MonoBehaviour
             Hide_All_Images();
         }));
 
-        generateDialog(0, dialogTexts, top, rt, ch, question, answers, correct_choice_index, correct_response, wrong_response);
+        generateDialog(id, dialogTexts, top, rt, ch, question, answers, correct_choice_index, correct_response, wrong_response);
     }
 
 
     public void QueenVictoria()
     {
+        int id = 1;
         string ch = "Exhibit";
         string question = "What is 2 times 5?";
         string[] answers = { "10", "7", "5 * 2", "Why should I care?" };
         int correct_choice_index = 0;
         string correct_response = "You are right.";
-        string wrong_response = "You are wrong.";
+        string wrong_response = "You are wrong. You need to revisit " + exhibitList[id - 1] + " now.";
         int top = 130;
         RectTransform rt = DialogManager.Printer.GetComponent<RectTransform>();
         var dialogTexts = new List<DialogData>();
@@ -198,18 +231,19 @@ public class StoryManagerScript : MonoBehaviour
             Hide_All_Images();
         }));
 
-        generateDialog(1, dialogTexts, top, rt, ch, question, answers, correct_choice_index, correct_response, wrong_response);
+        generateDialog(id, dialogTexts, top, rt, ch, question, answers, correct_choice_index, correct_response, wrong_response);
     }
 
 
     public void BahadurShahZafar()
     {
+        int id = 2;
         string ch = "Exhibit";
         string question = "What is 2 times 5?";
         string[] answers = { "10", "7", "5 * 2", "Why should I care?" };
         int correct_choice_index = 0;
         string correct_response = "You are right.";
-        string wrong_response = "You are wrong.";
+        string wrong_response = "You are wrong. You need to revisit " + exhibitList[id - 1] + " now.";
         int top = 130;
 
         RectTransform rt = DialogManager.Printer.GetComponent<RectTransform>();
@@ -222,7 +256,7 @@ public class StoryManagerScript : MonoBehaviour
             Hide_All_Images();
         }));
 
-        generateDialog(2, dialogTexts, top, rt, ch, question, answers, correct_choice_index, correct_response, wrong_response);
+        generateDialog(id, dialogTexts, top, rt, ch, question, answers, correct_choice_index, correct_response, wrong_response);
     }
 
 }
