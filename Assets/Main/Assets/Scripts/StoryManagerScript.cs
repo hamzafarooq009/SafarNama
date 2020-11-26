@@ -7,6 +7,10 @@ public class StoryManagerScript : MonoBehaviour
 {
     // #TODO: PlayerPrefs
     public DialogManager DialogManager;
+    public DialogManager FQuizDialogManager;
+    public GameObject FQuizGameObject;
+    public GameObject ARCam;
+    public GameObject ARUI;
     public GameObject[] Images;
     public GameObject[] Trackers;
     private string exhibit_ch = "Exhibit";
@@ -159,7 +163,24 @@ public class StoryManagerScript : MonoBehaviour
 
                 storyData[index] = true;
                 var answerDiag = new List<DialogData>();
-                answerDiag.Add(new DialogData(correct_response, exhibit_ch));
+
+                Debug.Log(index);
+                if (index == 2)
+                {
+                    answerDiag.Add(new DialogData(correct_response, exhibit_ch, () =>
+                    {
+                        Debug.Log("In final");
+                        ARCam.SetActive(false);
+                        ARUI.SetActive(false);
+                        FQuizGameObject.SetActive(true);
+                    }));
+
+                }
+                else
+                {
+                    answerDiag.Add(new DialogData(correct_response, exhibit_ch));
+                }
+
                 DialogManager.Show(answerDiag);
             }
             else if (DialogManager.Result == "Wrong")
