@@ -861,7 +861,7 @@ MonoBehaviour:
       m_Calls: []
   hoverSound: {fileID: 0}
   clickSound: {fileID: 0}
-  normalImage: {fileID: 0}
+  normalImage: {fileID: 144013976}
   normalText: {fileID: 1504529060}
   soundSource: {fileID: 0}
   useCustomContent: 0
