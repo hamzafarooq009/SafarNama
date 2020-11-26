@@ -233,7 +233,6 @@ public class StoryManagerScript : MonoBehaviour
         generateDialog(id, dialogTexts, top, rt, ch, question, answers, correct_choice_index, correct_response, wrong_response);
     }
 
-
     public void QueenVictoria()
     {
         int id = 1;
@@ -256,7 +255,6 @@ public class StoryManagerScript : MonoBehaviour
 
         generateDialog(id, dialogTexts, top, rt, ch, question, answers, correct_choice_index, correct_response, wrong_response);
     }
-
 
     public void BahadurShahZafar()
     {
@@ -282,4 +280,96 @@ public class StoryManagerScript : MonoBehaviour
         generateDialog(id, dialogTexts, top, rt, ch, question, answers, correct_choice_index, correct_response, wrong_response);
     }
 
+    public void StartFinalQuiz()
+    {
+        Question1();
+    }
+
+    public void Question1()
+    {
+        string question = "What is 2 times 5?";
+        string[] answers = { "10", "7", "5 * 2", "Why should I care?" };
+        int correct_choice_index = 0;
+        var dialogTexts = new List<DialogData>();
+
+        var Quiz = new DialogData(question, exhibit_ch);
+        for (int i = 0; i < 4; i++)
+        {
+            if (i == correct_choice_index)
+            {
+                Quiz.SelectList.Add("Correct", answers[i]);
+            }
+            else
+            {
+                Quiz.SelectList.Add("Wrong", answers[i]);
+            }
+        }
+
+        Quiz.Callback = () =>
+        {
+            //TODO: Sleep
+            if (DialogManager.Result == "Correct")
+            {
+                coins += 50;
+            }
+
+            Debug.Log(coins);
+            Question2();
+        };
+
+        dialogTexts.Add(Quiz);
+        FQuizDialogManager.Show(dialogTexts);
+    }
+    public void Question2()
+    {
+        string question = "What is 2 times 10?";
+        string[] answers = { "20", "7", "5 * 2", "Why should I care?" };
+        int correct_choice_index = 0;
+        var dialogTexts = new List<DialogData>();
+
+        var Quiz = new DialogData(question, exhibit_ch);
+        for (int i = 0; i < 4; i++)
+        {
+            if (i == correct_choice_index)
+            {
+                Quiz.SelectList.Add("Correct", answers[i]);
+            }
+            else
+            {
+                Quiz.SelectList.Add("Wrong", answers[i]);
+            }
+        }
+
+        Quiz.Callback = () =>
+        {
+            //TODO: Sleep
+            if (DialogManager.Result == "Correct")
+            {
+                coins += 50;
+            }
+
+            Debug.Log(coins);
+        };
+
+        dialogTexts.Add(Quiz);
+        FQuizDialogManager.Show(dialogTexts);
+    }
+
+    public void LockDialog()
+    {
+        string ch = "Makhnu";
+        var dialogTexts = new List<DialogData>();
+
+        dialogTexts.Add(new DialogData("Looks like this exhibit is locked. You should find another one first", ch));
+
+        if (dialogue_ongoing)
+            return;
+
+        dialogue_ongoing = true;
+
+        DialogManager.Show(dialogTexts);
+        dialogue_ongoing = false;
+    }
+
 }
+
