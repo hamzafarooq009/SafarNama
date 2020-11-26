@@ -208,7 +208,7 @@ namespace Doublsb.Dialog
         //Private Variable
         //================================================
         public string DefaultSize = "60";
-        private string _defaultColor = "white";
+        private string _defaultColor = "black";
 
         private string _color;
         private string _size;

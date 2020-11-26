@@ -21,9 +21,11 @@ public class StoryManagerScript : MonoBehaviour
     public int coins; //Current coins collected in the stage
     public Text coinsText;
 
+    public bool AtFinalQuiz;
+
     private void Start()
     {
-
+        AtFinalQuiz = false;
         coins = 0;
         coinsText.text = "Coins: " + coins.ToString();
         dialogue_ongoing = false;
@@ -94,7 +96,7 @@ public class StoryManagerScript : MonoBehaviour
         dialogue_ongoing = true;
 
         // If exhibit has been finished before, tell user to move to next exhibit
-        if (storyData[index] && index != 3) //To not check on last exhibit
+        if (!AtFinalQuiz && storyData[index] && index != 3) //To not check on last exhibit
         {
             var returnText = new List<DialogData>();
             returnText.Add(new DialogData("Hi again! you need to look for " + exhibitList[index + 1] + " now", ch, () =>
@@ -106,7 +108,7 @@ public class StoryManagerScript : MonoBehaviour
         }
 
         // If exhibit has been finished before, tell user to move to next exhibit
-        if (storyData[index] && index != 3) //To not check on last exhibit
+        if (!AtFinalQuiz && storyData[index] && index != 3) //To not check on last exhibit
         {
             var returnText = new List<DialogData>();
             returnText.Add(new DialogData("Hi again! you need to look for " + exhibitList[index + 1] + " now", ch, () =>
@@ -118,7 +120,7 @@ public class StoryManagerScript : MonoBehaviour
         }
 
         // If user has failed current exhibit, then storyData[index-1] will be false. Use this to send user back to previous exhibit
-        if (index != 0 && !storyData[index - 1])
+        if (!AtFinalQuiz && index != 0 && !storyData[index - 1])
         {
             var returnText = new List<DialogData>();
             returnText.Add(new DialogData("You have to meet " + exhibitList[index - 1] + " again before I will speak with you.", ch, () =>
@@ -148,6 +150,8 @@ public class StoryManagerScript : MonoBehaviour
         Quiz.Callback = () =>
         {
             //TODO: Sleep
+            test1();
+            test2(true);
             rt.offsetMax = new Vector2(rt.offsetMax.x, -top); //revert top
 
             if (DialogManager.Result == "Correct")
@@ -163,25 +167,21 @@ public class StoryManagerScript : MonoBehaviour
 
                 storyData[index] = true;
                 var answerDiag = new List<DialogData>();
+                var answerResp = new DialogData(correct_response, exhibit_ch);
 
-                Debug.Log(index);
+                // Add more dialogs by Makhnu if index == 2
+                Debug.Log("char = " + exhibitList[index] + " index = " + index);
+
+                answerDiag.Add(answerResp);
+                DialogManager.Show(answerDiag);
                 if (index == 2)
                 {
-                    answerDiag.Add(new DialogData(correct_response, exhibit_ch, () =>
-                    {
-                        Debug.Log("In final");
-                        ARCam.SetActive(false);
-                        ARUI.SetActive(false);
-                        FQuizGameObject.SetActive(true);
-                    }));
+                    AtFinalQuiz = true;
+                    // TODO: Add button enable
+                    // 
+
 
                 }
-                else
-                {
-                    answerDiag.Add(new DialogData(correct_response, exhibit_ch));
-                }
-
-                DialogManager.Show(answerDiag);
             }
             else if (DialogManager.Result == "Wrong")
             {
@@ -197,12 +197,23 @@ public class StoryManagerScript : MonoBehaviour
             dialogue_ongoing = false;
         };
 
-        dialogTexts.Add(Quiz);
+        if (!AtFinalQuiz)
+        {
+            dialogTexts.Add(Quiz);
+        }
 
         DialogManager.Show(dialogTexts);
     }
 
 
+    public void test1()
+    {
+        Debug.Log("Test");
+    }
+    public void test2(bool a)
+    {
+        Debug.Log("Test2");
+    }
     public void Makhnu1()
     {
         int id = 0;
