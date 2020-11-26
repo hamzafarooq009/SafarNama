@@ -10,10 +10,12 @@ public class StoryManagerScript : MonoBehaviour
     public DialogManager FQuizDialogManager;
     public GameObject FQuizGameObject;
     public GameObject ARCam;
+    public GameObject QuizBtn;
     public GameObject ARUI;
     public GameObject[] Images;
     public GameObject[] Trackers;
     private string exhibit_ch = "Exhibit";
+    private string mascot_name = "Makhnu";
     public bool dialogue_ongoing;
     public Dictionary<int, bool> storyData;
     public Dictionary<int, string> exhibitList;
@@ -37,7 +39,7 @@ public class StoryManagerScript : MonoBehaviour
             storyData.Add(i, false);
         }
 
-        exhibitList.Add(0, "Makhnu");
+        exhibitList.Add(0, mascot_name);
         exhibitList.Add(1, "Queen Victoria");
         exhibitList.Add(2, "Bahadur Shah Zafar");
         exhibitList.Add(3, "<ENTER NAME HERE>");
@@ -150,8 +152,6 @@ public class StoryManagerScript : MonoBehaviour
         Quiz.Callback = () =>
         {
             //TODO: Sleep
-            test1();
-            test2(true);
             rt.offsetMax = new Vector2(rt.offsetMax.x, -top); //revert top
 
             if (DialogManager.Result == "Correct")
@@ -178,7 +178,7 @@ public class StoryManagerScript : MonoBehaviour
                 {
                     AtFinalQuiz = true;
                     // TODO: Add button enable
-                    // 
+                    QuizBtn.SetActive(true);
 
 
                 }
@@ -205,15 +205,6 @@ public class StoryManagerScript : MonoBehaviour
         DialogManager.Show(dialogTexts);
     }
 
-
-    public void test1()
-    {
-        Debug.Log("Test");
-    }
-    public void test2(bool a)
-    {
-        Debug.Log("Test2");
-    }
     public void Makhnu1()
     {
         int id = 0;
@@ -227,12 +218,12 @@ public class StoryManagerScript : MonoBehaviour
         RectTransform rt = DialogManager.Printer.GetComponent<RectTransform>();
         var dialogTexts = new List<DialogData>();
 
-        dialogTexts.Add(new DialogData("/size:up/Hi, /size:init/my name is Makhnu!", ch));
-        dialogTexts.Add(new DialogData("You can easily change text /color:red/color, /color:white/and /size:up//size:up/size/size:init/ like this.", ch, () => Show_Image(0)));
-        dialogTexts.Add(new DialogData("Just put the command in the string!", ch, () => Show_Image(1)));
-        dialogTexts.Add(new DialogData("You can also change the chacter's sprite /emote:Sad/like this, /click//emote:Happy/Smile.", ch, () => Show_Image(2)));
-        dialogTexts.Add(new DialogData("If you need an emphasis effect, /wait:0.5/wait... /click/or click command.", ch, () => Show_Image(3)));
-        dialogTexts.Add(new DialogData("Text can be /speed:down/slow... /speed:init//speed:up/or fast.", ch, () => Show_Image(4)));
+        // dialogTexts.Add(new DialogData("/size:up/Hi, /size:init/my name is Makhnu!", ch));
+        // dialogTexts.Add(new DialogData("You can easily change text /color:red/color, /color:white/and /size:up//size:up/size/size:init/ like this.", ch, () => Show_Image(0)));
+        // dialogTexts.Add(new DialogData("Just put the command in the string!", ch, () => Show_Image(1)));
+        // dialogTexts.Add(new DialogData("You can also change the chacter's sprite /emote:Sad/like this, /click//emote:Happy/Smile.", ch, () => Show_Image(2)));
+        // dialogTexts.Add(new DialogData("If you need an emphasis effect, /wait:0.5/wait... /click/or click command.", ch, () => Show_Image(3)));
+        // dialogTexts.Add(new DialogData("Text can be /speed:down/slow... /speed:init//speed:up/or fast.", ch, () => Show_Image(4)));
         dialogTexts.Add(new DialogData("You don't even need to click on the window like this.../speed:0.1/ tada!/close/", ch, () =>
         {
             rt.offsetMax = new Vector2(rt.offsetMax.x, top);
