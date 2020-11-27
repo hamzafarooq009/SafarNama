@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using Doublsb.Dialog;
 using UnityEngine.UI;
+
 
 public class StoryManagerScript : MonoBehaviour
 {
@@ -28,6 +30,8 @@ public class StoryManagerScript : MonoBehaviour
 
     public bool AtFinalQuiz;
 
+    GameObject dialog = null;
+    
     private void Start()
     {
         AtFinalQuiz = false;
@@ -49,6 +53,7 @@ public class StoryManagerScript : MonoBehaviour
 
         Makhnu();
     }
+
 
     private void Show_Image(int index)
     {
