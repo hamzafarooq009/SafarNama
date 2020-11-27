@@ -12,6 +12,8 @@ public class StoryManagerScript : MonoBehaviour
     public GameObject ARCam;
     public GameObject QuizBtn;
     public GameObject ARUI;
+    public GameObject TourComplete;
+    public GameObject Printer;
     public GameObject[] Images;
     public GameObject[] Trackers;
     private string exhibit_ch = "Exhibit";
@@ -22,6 +24,8 @@ public class StoryManagerScript : MonoBehaviour
 
     public int coins; //Current coins collected in the stage
     public Text coinsText;
+    public Text finalCoinsText;
+
 
     public bool AtFinalQuiz;
 
@@ -42,7 +46,7 @@ public class StoryManagerScript : MonoBehaviour
         exhibitList.Add(0, mascot_name);
         exhibitList.Add(1, "Queen Victoria");
         exhibitList.Add(2, "Bahadur Shah Zafar");
-        exhibitList.Add(3, "<ENTER NAME HERE>");
+        exhibitList.Add(3, "Rani of Jhansi");
     }
 
     private void Show_Image(int index)
@@ -282,78 +286,104 @@ public class StoryManagerScript : MonoBehaviour
 
     public void StartFinalQuiz()
     {
-        Question1();
+        Questions();
     }
 
-    public void Question1()
+    public void Questions()
     {
-        string question = "What is 2 times 5?";
-        string[] answers = { "10", "7", "5 * 2", "Why should I care?" };
+        string question = "What is the answer of this question?";
+        string[] a1 = { "10", "99", "32 * 2", "ok?" };
         int correct_choice_index = 0;
         var dialogTexts = new List<DialogData>();
 
-        var Quiz = new DialogData(question, exhibit_ch);
+        var Q1 = new DialogData(question, exhibit_ch);
         for (int i = 0; i < 4; i++)
         {
             if (i == correct_choice_index)
             {
-                Quiz.SelectList.Add("Correct", answers[i]);
+                Q1.SelectList.Add("Correct", a1[i]);
             }
             else
             {
-                Quiz.SelectList.Add("Wrong", answers[i]);
+                Q1.SelectList.Add("Wrong", a1[i]);
             }
         }
 
-        Quiz.Callback = () =>
+        Q1.Callback = () =>
         {
             //TODO: Sleep
-            if (DialogManager.Result == "Correct")
+            if (FQuizDialogManager.Result == "Correct")
             {
                 coins += 50;
             }
 
-            Debug.Log(coins);
-            Question2();
         };
 
-        dialogTexts.Add(Quiz);
-        FQuizDialogManager.Show(dialogTexts);
-    }
-    public void Question2()
-    {
-        string question = "What is 2 times 10?";
-        string[] answers = { "20", "7", "5 * 2", "Why should I care?" };
-        int correct_choice_index = 0;
-        var dialogTexts = new List<DialogData>();
 
-        var Quiz = new DialogData(question, exhibit_ch);
+        question = "What is 2 times 10?";
+        string[] a2 = { "20", "7", "5 * 2", "Why should I care?" };
+        correct_choice_index = 0;
+        
+        var Q2 = new DialogData(question, exhibit_ch);
         for (int i = 0; i < 4; i++)
         {
             if (i == correct_choice_index)
             {
-                Quiz.SelectList.Add("Correct", answers[i]);
+                Q2.SelectList.Add("Correct", a2[i]);
             }
             else
             {
-                Quiz.SelectList.Add("Wrong", answers[i]);
+                Q2.SelectList.Add("Wrong", a2[i]);
             }
         }
 
-        Quiz.Callback = () =>
+        Q2.Callback = () =>
         {
             //TODO: Sleep
-            if (DialogManager.Result == "Correct")
+            if (FQuizDialogManager.Result == "Correct")
             {
                 coins += 50;
             }
 
-            Debug.Log(coins);
         };
 
-        dialogTexts.Add(Quiz);
+        question = "What is 20 times 10?";
+        string[] a3 = { "200", "70", "50 * 20", "Why should I care?0" };
+        correct_choice_index = 0;
+        
+        var Q3 = new DialogData(question, exhibit_ch);
+        for (int i = 0; i < 4; i++)
+        {
+            if (i == correct_choice_index)
+            {
+                Q3.SelectList.Add("Correct", a3[i]);
+            }
+            else
+            {
+                Q3.SelectList.Add("Wrong", a3[i]);
+            }
+        }
+
+        Q3.Callback = () =>
+        {
+            //TODO: Sleep
+            if (FQuizDialogManager.Result == "Correct")
+            {
+                coins += 50;
+                Printer.transform.GetChild(0).gameObject.SetActive(false);
+                Printer.SetActive(true);
+                TourComplete.SetActive(true);
+                finalCoinsText.text = coins.ToString();
+            }
+        };
+
+        dialogTexts.Add(Q1);
+        dialogTexts.Add(Q2);
+        dialogTexts.Add(Q3);
+        
         FQuizDialogManager.Show(dialogTexts);
     }
+
 
     public void LockDialog()
     {
