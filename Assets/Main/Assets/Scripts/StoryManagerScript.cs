@@ -205,6 +205,17 @@ public class StoryManagerScript : MonoBehaviour
             dialogTexts.Add(Quiz);
         }
 
+        // Dialog free on last dialog
+        if (AtFinalQuiz)
+        {
+            int lastIndex = dialogTexts.Count - 1;
+            dialogTexts[lastIndex].Callback = () =>
+            {
+                Debug.Log("Here");
+                dialogue_ongoing = false;
+            };
+        }
+
         DialogManager.Show(dialogTexts);
     }
 
