@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class StoryManagerScript : MonoBehaviour
 {
-    // #TODO: PlayerPrefs
     public DialogManager DialogManager;
     public DialogManager FQuizDialogManager;
     public GameObject FQuizGameObject;
@@ -323,7 +322,7 @@ public class StoryManagerScript : MonoBehaviour
         question = "What is 2 times 10?";
         string[] a2 = { "20", "7", "5 * 2", "Why should I care?" };
         correct_choice_index = 0;
-        
+
         var Q2 = new DialogData(question, exhibit_ch);
         for (int i = 0; i < 4; i++)
         {
@@ -350,7 +349,7 @@ public class StoryManagerScript : MonoBehaviour
         question = "What is 20 times 10?";
         string[] a3 = { "200", "70", "50 * 20", "Why should I care?0" };
         correct_choice_index = 0;
-        
+
         var Q3 = new DialogData(question, exhibit_ch);
         for (int i = 0; i < 4; i++)
         {
@@ -374,13 +373,24 @@ public class StoryManagerScript : MonoBehaviour
                 Printer.SetActive(true);
                 TourComplete.SetActive(true);
                 finalCoinsText.text = coins.ToString();
+
+                int AccCoins = PlayerPrefs.GetInt("PlayerCoins", -1);
+
+                if (AccCoins != -1)
+                {
+                    AccCoins += coins;
+                    PlayerPrefs.SetInt("PlayerCoins", AccCoins);
+                    PlayerPrefs.Save();
+                    Debug.Log(PlayerPrefs.GetInt("PlayerCoins", -1));
+                }
+
             }
         };
 
         dialogTexts.Add(Q1);
         dialogTexts.Add(Q2);
         dialogTexts.Add(Q3);
-        
+
         FQuizDialogManager.Show(dialogTexts);
     }
 
