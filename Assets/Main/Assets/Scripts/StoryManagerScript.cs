@@ -29,7 +29,7 @@ public class StoryManagerScript : MonoBehaviour
     {
         AtFinalQuiz = false;
         coins = 0;
-        coinsText.text = "Coins: " + coins.ToString();
+        coinsText.text = coins.ToString();
         dialogue_ongoing = false;
         storyData = new Dictionary<int, bool>();
         exhibitList = new Dictionary<int, string>();
@@ -157,7 +157,7 @@ public class StoryManagerScript : MonoBehaviour
             if (DialogManager.Result == "Correct")
             {
                 coins += 50;
-                coinsText.text = "Coins: " + coins.ToString();
+                coinsText.text = coins.ToString();
 
                 // Only unlock exhibit if not last exhibit
                 if (index != 2) // FIXME: change length
