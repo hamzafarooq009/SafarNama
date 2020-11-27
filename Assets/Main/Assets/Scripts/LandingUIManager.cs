@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SideMenuManager : MonoBehaviour
+public class LandingUIManager : MonoBehaviour
 {
     public Text coins;
     void OnEnable()
