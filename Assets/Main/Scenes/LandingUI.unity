@@ -11406,6 +11406,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coins: {fileID: 70256421}
+  tourHistoryCoins: {fileID: 583393062}
+  tourHistoryName: {fileID: 754694473}
+  tourHistoryTime: {fileID: 1115332283}
+  languagePanel: {fileID: 321638731}
+  home: {fileID: 1590133142}
+  topBar: {fileID: 1072814868}
+  topShadow: {fileID: 834056251}
+  menuButton: {fileID: 802088066}
 --- !u!1 &1774447931
 GameObject:
   m_ObjectHideFlags: 0
@@ -17202,8 +17210,8 @@ MonoBehaviour:
         m_RotationOrder: 4
       StartPos: {x: -430, y: 0, z: 0}
       EndPos: {x: 0, y: 0, z: 0}
-      StartWorldPos: {x: -1104.5724, y: 1280, z: 0}
-      EndWorldPos: {x: 0.000015735626, y: 1280, z: 0}
+      StartWorldPos: {x: -828.4293, y: 960, z: 0}
+      EndWorldPos: {x: 0.000006914139, y: 960, z: 0}
     ScalePropetiesAnim:
       scaleEnabled: 0
       TweenCurveEnterScale:
