@@ -6074,8 +6074,8 @@ GameObject:
   - component: {fileID: 3737285117211428867}
   - component: {fileID: 3737285117211428866}
   - component: {fileID: 3737285117211428865}
-  - component: {fileID: 3737285117211428864}
   - component: {fileID: 3737285117211428868}
+  - component: {fileID: 3737285117211428864}
   m_Layer: 0
   m_Name: C
   m_TagString: Untagged
@@ -6205,7 +6205,7 @@ MonoBehaviour:
     RequiredFingerCount: 0
     RequiredMouseButtons: 0
     RequiredSelectable: {fileID: 0}
-  Axis: {x: 0, y: 0, z: -1}
+  Axis: {x: 0, y: -1, z: 0}
   Space: 1
 --- !u!1 &3798279791375214450
 GameObject:
@@ -6221,6 +6221,7 @@ GameObject:
   - component: {fileID: 3798279791375214454}
   - component: {fileID: 3798279791375214453}
   - component: {fileID: 3798279791375214452}
+  - component: {fileID: 3798279791375214455}
   - component: {fileID: 3798279791375214451}
   m_Layer: 0
   m_Name: D
@@ -6333,6 +6334,26 @@ MonoBehaviour:
   Sensitivity: 1
   Dampening: -1
   remainingScale: {x: 0, y: 0, z: 0}
+--- !u!114 &3798279791375214455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3798279791375214450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc7c91b26689a054d88448aba6dfe424, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Use:
+    Filter: 0
+    IgnoreStartedOverGui: 1
+    RequiredFingerCount: 0
+    RequiredMouseButtons: 0
+    RequiredSelectable: {fileID: 0}
+  Axis: {x: 0, y: -1, z: 0}
+  Space: 1
 --- !u!222 &3957458496477266388
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8082,7 +8103,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5555099507927249160}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52d72cc6210cb7144a24acb7402222a6, type: 3}
+  m_Script: {fileID: 11500000, guid: dc7c91b26689a054d88448aba6dfe424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Use:
@@ -8091,11 +8112,8 @@ MonoBehaviour:
     RequiredFingerCount: 0
     RequiredMouseButtons: 0
     RequiredSelectable: {fileID: 0}
-  Camera: {fileID: 0}
-  Relative: 0
-  Dampening: -1
-  remainingTranslation: {x: 0, y: 0, z: 0}
-  remainingRotation: {x: 0, y: 0, z: 0, w: 1}
+  Axis: {x: 0, y: -1, z: 0}
+  Space: 1
 --- !u!4 &5578744416369366212
 Transform:
   m_ObjectHideFlags: 0
