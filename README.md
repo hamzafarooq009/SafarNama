@@ -5,6 +5,8 @@
 ---
 
 ## [Demo Video](https://streamable.com/pj45nz)
+## [Download Link](https://github.com/AhmedFarhan252/SafarNama/releases)
+
 
 ---
 
