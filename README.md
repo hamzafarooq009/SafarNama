@@ -1,6 +1,6 @@
 # SafarNama
 
-## An Android application that makes historical and cultural trips of Pakistan more accessible and engaging through the use of Augmented Reality, 3D interactive Exhibits, and a gamified approach
+## An Android application that makes historical and cultural trips of Pakistan more accessible and engaging through the use of Augmented Reality, 3D interactive Exhibits, and a gamified approach.
 
 ---
 
